@@ -1,7 +1,7 @@
 import wave
 import matplotlib.pyplot as plt
 import numpy as np
-with wave.open('/Users/josehung/Downloads/document/course/CMSC5707/assignment/[Asg-1][1155177751][Hong Shengzhe]/set A/s1A.wav') as w:
+with wave.open('/Users/josehung/Downloads/document/course/CMSC5707/assignment/[Asg-1][1155177751][Hong Shengzhe]/set-A/s1A.wav') as w:
     framerate = w.getframerate()
     frames = w.getnframes()
     channels = w.getnchannels()
