@@ -20,3 +20,15 @@ In this part, I choose to use [plot.py](./plot.py) to process the s1a.wav file, 
 
 
 ## Part 4
+
+### a
+
+
+
+### b
+
+### c
+
+### d
+
+### e
