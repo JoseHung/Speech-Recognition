@@ -23,9 +23,15 @@ In this part, I choose to use [plot.py](./plot.py) to process the s1a.wav file, 
 
 ### a
 
+Here the processing is continued based on the previously selected s1A.wav, and T1 and T2 are obtained by calculating the number of zero crossing and energy level. the following figure shows the obtained results. (Note that the horizontal coordinates are different from s1A.jpg, which is twice as large, because the sampling data format was changed during the processing)
+
+![end point detection](./s1A_wav.jpg)
+
 
 
 ### b
+
+
 
 ### c
 
