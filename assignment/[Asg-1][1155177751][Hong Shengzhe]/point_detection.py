@@ -36,8 +36,6 @@ def calZeroCrossingRate(wave_data) :
             sum = 0
         elif i == len(wave_data) - 1 :
             zeroCrossingRate.append(float(sum) / 511)
-    plt.plot(zeroCrossingRate)
-    plt.show()
     return zeroCrossingRate
 
 # 利用短时能量，短时过零率，使用双门限法进行端点检测
@@ -60,53 +58,30 @@ def endPointDetect(wave_data, energy, zeroCrossingRate) :
     Zs = sum / 5                     #过零率阈值
 
     A = []
-    B = []
-    C = []
 
     # 首先利用较大能量阈值 MH 进行初步检测
     flag = 0
     for i in range(len(energy)):
-        if len(A) == 0 and flag == 0 and energy[i] > MH :
+        if len(A) == 0 and flag == 0 and energy[i] > ML and zeroCrossingRate[i] >= 3 * Zs :
             A.append(i)
             flag = 1
-        elif flag == 0 and energy[i] > MH and i - 21 > A[len(A) - 1]:
+        elif flag == 0 and energy[i] > ML and i - 21 > A[len(A) - 1] and zeroCrossingRate[i] >= 3 * Zs :
             A.append(i)
             flag = 1
-        elif flag == 0 and energy[i] > MH and i - 21 <= A[len(A) - 1]:
+        elif flag == 0 and energy[i] > ML and i - 21 <= A[len(A) - 1] and zeroCrossingRate[i] >= 3 * Zs :
             A = A[:len(A) - 1]
             flag = 1
 
-        if flag == 1 and energy[i] < MH :
+        if flag == 1 and (energy[i] < ML or zeroCrossingRate[i] < 3 * Zs) :
             A.append(i)
             flag = 0
     print("较高能量阈值，计算后的浊音A:" + str(A))
-
-    # 利用较小能量阈值 ML 进行第二步能量检测
-    for j in range(len(A)) :
-        i = A[j]
-        if j % 2 == 1 :
-            while i < len(energy) and energy[i] > ML :
-                i = i + 1
-            B.append(i)
-        else :
-            while i > 0 and energy[i] > ML :
-                i = i - 1
-            B.append(i)
-    print("较低能量阈值，增加一段语言B:" + str(B))
-
-    # 利用过零率进行最后一步检测
-    for j in range(len(B)) :
-        i = B[j]
-        if j % 2 == 1 :
-            while i < len(zeroCrossingRate) and zeroCrossingRate[i] >= 3 * Zs :
-                i = i + 1
-            C.append(i)
-        else :
-            while i > 0 and zeroCrossingRate[i] >= 3 * Zs :
-                i = i - 1
-            C.append(i)
-    print("过零率阈值，最终语音分段C:" + str(C))
-    return C
+    start = A[0] * 512
+    end = A[1] * 512
+    plt.axvline(start, c = 'r')
+    plt.axvline(end, c = 'r')
+    plt.plot(wave_data)
+    plt.show()
 
 
 f = wave.open("/Users/josehung/Downloads/document/course/CMSC5707/assignment/[Asg-1][1155177751][Hong Shengzhe]/set-A/s1A.wav","rb")
