@@ -78,10 +78,18 @@ def endPointDetect(wave_data, energy, zeroCrossingRate) :
     print("较高能量阈值，计算后的浊音A:" + str(A))
     start = A[0] * 512
     end = A[1] * 512
+    plt.plot(wave_data)
     plt.axvline(start, c = 'r')
     plt.axvline(end, c = 'r')
-    plt.plot(wave_data)
+    plt.text(start, 0, 'T1', c = 'r')
+    plt.text(end, 0, 'T2', c = 'r')
+    seg_start = start + 20000
+    seg_end = start + 21764
+    plt.axvline(seg_start, c = 'y')
+    plt.axvline(seg_end, c = 'y')
+    plt.text(seg_end, 0, 'Seg1', c = 'y')
     plt.show()
+
 
 
 f = wave.open("/Users/josehung/Downloads/document/course/CMSC5707/assignment/[Asg-1][1155177751][Hong Shengzhe]/set-A/s1A.wav","rb")
