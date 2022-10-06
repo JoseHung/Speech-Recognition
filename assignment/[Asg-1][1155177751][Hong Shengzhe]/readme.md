@@ -31,7 +31,9 @@ Here the processing is continued based on the previously selected s1A.wav, and T
 
 ### b
 
+The Seg1 selected here was manually intercepted after calculating the sample data, and the location of the segment is shown in the figure below.
 
+![Segment](./s1A_Seg1_wav.jpg)
 
 ### c
 
