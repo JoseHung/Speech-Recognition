@@ -1,0 +1,7 @@
+def pre_em(Seg1):
+    pre_Seg1 = []
+    pre_Seg1.append(Seg1[0])
+    len = 882
+    for k in range(1, len):
+        pre_Seg1.append(Seg1[k] - 0.95 * Seg1[k - 1])
+    return pre_Seg1

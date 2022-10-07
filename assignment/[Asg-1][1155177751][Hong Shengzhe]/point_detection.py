@@ -112,7 +112,13 @@ def fourierTransform(Seg1):
     plt.show()
     return res
 
-
+def pre_em(Seg1):
+    pre_Seg1 = []
+    pre_Seg1.append(Seg1[0])
+    len = 882
+    for k in range(1, len):
+        pre_Seg1.append(Seg1[k] - 0.95 * Seg1[k - 1])
+    return pre_Seg1
 
 f = wave.open("/Users/josehung/Downloads/document/course/CMSC5707/assignment/[Asg-1][1155177751][Hong Shengzhe]/set-A/s1A.wav","rb")
 # getparams() 一次性返回所有的WAV文件的格式信息
@@ -132,4 +138,12 @@ f.close()
 energy = calEnergy(wave_data)
 zeroCrossingRate = calZeroCrossingRate(wave_data)
 Seg1 = endPointDetect(wave_data, energy, zeroCrossingRate)
-FT = fourierTransform(Seg1)
+pre_Seg1 = pre_em(Seg1)
+plt.subplot(2,1,1)
+plt.plot(Seg1)
+plt.title("Seg1")
+plt.subplot(2,1,2)
+plt.plot(pre_Seg1)
+plt.title("Pem_Seg1")
+plt.show()
+#FT = fourierTransform(Seg1)
