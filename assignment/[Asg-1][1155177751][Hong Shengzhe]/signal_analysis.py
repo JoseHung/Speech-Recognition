@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from re import A
 import wave
 import os
 import numpy as np
@@ -53,7 +54,6 @@ def endPointDetect(wave_data, energy, zeroCrossingRate) :
     ML = sum / 5                        
     MH = energyAverage / 4              #较高的能量阈值
     ML = (ML + MH) / 4    #较低的能量阈值
-    print(ML)
     sum = 0
     for zcr in zeroCrossingRate[:5] :
         sum = float(sum) + zcr             
@@ -92,7 +92,8 @@ def endPointDetect(wave_data, energy, zeroCrossingRate) :
     for i in range(882):
         Seg1.append(wave_data[start + 20000 + i])
     return Seg1
-    
+
+#傅里叶变换    
 def fourierTransform(Seg1):
     res = []
     x_real = []
@@ -112,13 +113,45 @@ def fourierTransform(Seg1):
     plt.show()
     return res
 
+#pre-emphasis处理
 def pre_em(Seg1):
-    pre_Seg1 = []
-    pre_Seg1.append(Seg1[0])
+    pem_Seg1 = []
     len = 882
-    for k in range(1, len):
-        pre_Seg1.append(Seg1[k] - 0.95 * Seg1[k - 1])
-    return pre_Seg1
+    for k in range(1,len):
+        pem_Seg1.append(Seg1[k] - 0.95 * Seg1[k - 1])
+    return pem_Seg1
+
+#LPC处理
+def lpc_coeff(pem_Seg1):
+    # 这一部分是计算 auto-correlation parameters
+    auto_coeff = np.array([0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]) # lpc参数长度 + 1
+    i = 0
+    while i <= 10:
+        j = i
+        while j < 881:
+            auto_coeff[i] += pem_Seg1[j] * pem_Seg1[j-i]
+            j += 1
+        i += 1
+    print(auto_coeff)
+    a = []
+    for i in range(10):
+        tmp = []
+        j = 0
+        while j < i:
+            tmp.append(auto_coeff[i - j])
+            j += 1
+        if j == i:
+            tmp.append(auto_coeff[0])
+            j += 1
+        while j > i and j <10:
+            tmp.append(auto_coeff[j - i])
+            j += 1
+        a.append(tmp)
+    b = auto_coeff[1:11]
+    inverse = np.linalg.inv(a)
+    lpccoeff = np.dot(b, inverse)
+    print(lpccoeff)
+    return lpccoeff
 
 f = wave.open("/Users/josehung/Downloads/document/course/CMSC5707/assignment/[Asg-1][1155177751][Hong Shengzhe]/set-A/s1A.wav","rb")
 # getparams() 一次性返回所有的WAV文件的格式信息
@@ -138,12 +171,16 @@ f.close()
 energy = calEnergy(wave_data)
 zeroCrossingRate = calZeroCrossingRate(wave_data)
 Seg1 = endPointDetect(wave_data, energy, zeroCrossingRate)
-pre_Seg1 = pre_em(Seg1)
+pem_Seg1 = pre_em(Seg1)
+lpc = lpc_coeff(pem_Seg1)
+
+'''
 plt.subplot(2,1,1)
 plt.plot(Seg1)
 plt.title("Seg1")
 plt.subplot(2,1,2)
-plt.plot(pre_Seg1)
+plt.plot(pem_Seg1)
 plt.title("Pem_Seg1")
+'''
 plt.show()
 #FT = fourierTransform(Seg1)

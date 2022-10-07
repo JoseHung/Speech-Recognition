@@ -38,8 +38,14 @@ The Seg1 selected here was manually intercepted after calculating the sample dat
 ### c
 
 - [code](./fourier_code.txt)
-- [fourier_s1A.jpg](./fourier_s1A.jpg)
+- ![fourier_s1A.jpg](./fourier_s1A.jpg)
 
 ### d
 
+- [code](./pre-em.txt)
+- ![Pem_s1A.jpg](./Pem_s1A.jpg)
+
 ### e
+
+- [code](./lpc.txt)
+- [lpc-parameters](./lpc10.txt)
