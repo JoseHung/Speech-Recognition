@@ -49,3 +49,8 @@ The Seg1 selected here was manually intercepted after calculating the sample dat
 
 - [code](./lpc.txt)
 - [lpc-parameters](./lpc10.txt)
+
+
+
+## Part 5
+
