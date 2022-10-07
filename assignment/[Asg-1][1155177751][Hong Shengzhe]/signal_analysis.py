@@ -78,19 +78,24 @@ def endPointDetect(wave_data, energy, zeroCrossingRate) :
     print("较高能量阈值, 计算后的浊音A:" + str(A))
     start = A[0] * 512
     end = A[1] * 512
-#    plt.plot(wave_data)
-#    plt.axvline(start, c = 'r')
-#    plt.axvline(end, c = 'r')
-#    plt.text(start, 0, 'T1', c = 'r')
-#    plt.text(end, 0, 'T2', c = 'r')
-    seg_start = start + 20000
-    seg_end = start + 20882
-#    plt.axvline(seg_start, c = 'y')
-#    plt.axvline(seg_end, c = 'y')
-#    plt.text(seg_end, 0, 'Seg1', c = 'y')
+    
+    seg_start = start + 5000
+    seg_end = start + 5882
+    
+    '''
+    plt.plot(wave_data)
+    plt.axvline(start, c = 'r')
+    plt.axvline(end, c = 'r')
+    plt.text(start, 0, 'T1', c = 'r')
+    plt.text(end, 0, 'T2', c = 'r')
+    plt.axvline(seg_start, c = 'y')
+    plt.axvline(seg_end, c = 'y')
+    plt.text(seg_end, 0, 'Seg1', c = 'y')
+    plt.show()
+    '''
     Seg1 = []
     for i in range(882):
-        Seg1.append(wave_data[start + 20000 + i])
+        Seg1.append(wave_data[start + 5000 + i])
     return Seg1
 
 #傅里叶变换    
@@ -135,7 +140,6 @@ def lpc_coeff(pem_Seg1):
             auto_coeff[i] += pem_Seg1[j] * pem_Seg1[j-i]
             j += 1
         i += 1
-    print(auto_coeff)
     a = []
     for i in range(10):
         tmp = []
@@ -175,8 +179,7 @@ energy = calEnergy(wave_data)
 zeroCrossingRate = calZeroCrossingRate(wave_data)
 Seg1 = endPointDetect(wave_data, energy, zeroCrossingRate)
 pem_Seg1 = pre_em(Seg1)
-#lpc = lpc_coeff(pem_Seg1)
-
+lpc = lpc_coeff(pem_Seg1)
 '''
 plt.subplot(2,1,1)
 plt.plot(Seg1)
@@ -184,5 +187,6 @@ plt.title("Seg1")
 plt.subplot(2,1,2)
 plt.plot(pem_Seg1)
 plt.title("Pem_Seg1")
+plt.show()
 '''
-FT = fourierTransform(Seg1)
+#FT = fourierTransform(Seg1)
