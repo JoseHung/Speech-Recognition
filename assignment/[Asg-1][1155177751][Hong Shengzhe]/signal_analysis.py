@@ -107,7 +107,10 @@ def fourierTransform(Seg1):
         x_real.append(tmp_real)
         x_img.append(tmp_img)
         res.append(math.sqrt(x_real[m] * x_real[m] + x_img[m] * x_img[m]))
-    plt.plot(res)
+    f = []
+    for i in range(882):
+        f.append(i * 44100 / 882)
+    plt.plot(f, res)
     plt.xlabel('frequency')
     plt.ylabel('energy')
     plt.show()
@@ -172,7 +175,7 @@ energy = calEnergy(wave_data)
 zeroCrossingRate = calZeroCrossingRate(wave_data)
 Seg1 = endPointDetect(wave_data, energy, zeroCrossingRate)
 pem_Seg1 = pre_em(Seg1)
-lpc = lpc_coeff(pem_Seg1)
+#lpc = lpc_coeff(pem_Seg1)
 
 '''
 plt.subplot(2,1,1)
@@ -182,5 +185,4 @@ plt.subplot(2,1,2)
 plt.plot(pem_Seg1)
 plt.title("Pem_Seg1")
 '''
-plt.show()
-#FT = fourierTransform(Seg1)
+FT = fourierTransform(Seg1)

@@ -11,7 +11,10 @@ def fourierTransform(Seg1):
         x_real.append(tmp_real)
         x_img.append(tmp_img)
         res.append(math.sqrt(x_real[m] * x_real[m] + x_img[m] * x_img[m]))
-    plt.plot(res)
+    f = []
+    for i in range(882):
+        f.append(i * 44100 / 882)
+    plt.plot(f, res)
     plt.xlabel('frequency')
     plt.ylabel('energy')
     plt.show()
