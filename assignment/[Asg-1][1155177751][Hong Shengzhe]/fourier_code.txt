@@ -1,0 +1,18 @@
+def fourierTransform(Seg1):
+    res = []
+    x_real = []
+    x_img = []
+    for m in range(882):
+        tmp_real = 0
+        tmp_img = 0
+        for k in range(882):
+            tmp_real = tmp_real + Seg1[k] * math.cos(2 * math.pi * k * m / 882)
+            tmp_img = tmp_img - Seg1[k] * math.sin(2 * math.pi * k * m / 882)
+        x_real.append(tmp_real)
+        x_img.append(tmp_img)
+        res.append(math.sqrt(x_real[m] * x_real[m] + x_img[m] * x_img[m]))
+    plt.plot(res)
+    plt.xlabel('frequency')
+    plt.ylabel('energy')
+    plt.show()
+    return res
