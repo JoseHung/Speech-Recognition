@@ -54,3 +54,11 @@ The Seg1 selected here was manually intercepted after calculating the sample dat
 
 ## Part 5
 
+- [code](./speech_recognition.py)
+- ![Confusion Matrix Table](./confusion_matrix_table.jpg)
+
+In this part, the program reads the wav files sequentially, with the horizontal coordinates being the template data and the vertical coordinates being the testing data.As shown in the graph, the darker the color, the lower the accumulated score, as expected.
+
+Then I selected s1A.wav and s1B.wav (their contents are both “1” in Mandarin) to find the minimum accumulated distance as well as to get the optimal path. The results are shown in the figure below.
+
+![Optimal Path](./optimal_path.jpg)

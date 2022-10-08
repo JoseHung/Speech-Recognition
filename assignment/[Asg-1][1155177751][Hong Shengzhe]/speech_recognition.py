@@ -61,20 +61,42 @@ def optimal_distortion(mfccA, mfccB):
     else:
         min_score = min2
         point = point2
+    # 需要画出 optimal path 则取消下面注释
+    '''
+    accu_matrix = accu_matrix.tolist()
+    optimal_path = []
+    optimal_path.append(point)
+    x = point[0]
+    y = point[1]
+    # 逆向寻找路径
+    while x > 0 and y > 0:
+        m = min(accu_matrix[x - 1][y],accu_matrix[x][y - 1],accu_matrix[x - 1][y - 1])
+        if m == accu_matrix[x - 1][y]:
+            index = [x - 1, y]
+        elif m == accu_matrix[x][y - 1]:
+            index = [x, y - 1]
+        elif m == accu_matrix[x - 1][y - 1]:
+            index = [x - 1, y - 1]
+        optimal_path.append(index)
+        x = index[0]
+        y = index[1]
+    # 作图
+    print(lenA, lenB)
+    print(optimal_path)
+    optimal_path.reverse()
+    plt.imshow(accu_matrix, cmap=plt.cm.gray)
+    plt.axis([0, lenB - 1,0, lenA - 1])
+    plt.colorbar()
+    plt.title('Optimal Path')
+    plt.xlabel('Input')
+    plt.ylabel('Reference')
+    for pt in optimal_path:
+        plt.scatter([pt[1]], pt[0], s = 25, c = 'g')
+    plt.show()
+    '''
     return min_score
 
-'''
-# draw the path
-s1A_data_path = '/Users/josehung/Downloads/document/course/CMSC5707/assignment/[Asg-1][1155177751][Hong Shengzhe]/set-A/s1A.wav'
-s1B_data_path = '/Users/josehung/Downloads/document/course/CMSC5707/assignment/[Asg-1][1155177751][Hong Shengzhe]/set-B/s1B.wav'
-mfccA = mfcc(s1A_data_path)
-mfccB = mfcc(s1B_data_path)
-score = optimal_distortion(mfccA, mfccB)
-'''
-# 1 读取文件夹中所有文件，分为 A 和 B 两类
-# 2 得到两类 mfcc 参数
-# 3 两两对比计算，得到score
-# 4 画出score矩阵
+
 
 # show an n × n Confusion matrix- table
 # 得到所有的文件路径
@@ -92,6 +114,7 @@ for i in range(6):
     tmp = mfcc(setB_path[i])
     mfccB.append(tmp)
 
+
 # 两两计算 minimum accumulated distance 并得到 n × n Confusion matrix-table
 score_matrix = []
 for i in range(6):
@@ -104,12 +127,15 @@ score_matrix = np.array(score_matrix)
 plt.imshow(score_matrix, cmap=plt.cm.gray)
 plt.colorbar()
 plt.title("Confusion Matrix Table")
-plt.xlabel('Reference Class)')
+plt.xlabel('Reference Class')
 plt.ylabel('Predicted Class')
-'''
-# 可以显示具体数值
-for i in range(6):
-    for j in range(6):
-        plt.text(x=j, y=i, s=int(score_matrix[i, j]))
-'''
 plt.show()
+'''
+
+# draw the path
+s1A_data_path = '/Users/josehung/Downloads/document/course/CMSC5707/assignment/[Asg-1][1155177751][Hong Shengzhe]/set-A/s1A.wav'
+s1B_data_path = '/Users/josehung/Downloads/document/course/CMSC5707/assignment/[Asg-1][1155177751][Hong Shengzhe]/set-B/s1B.wav'
+mfccA = mfcc(s1A_data_path)
+mfccB = mfcc(s1B_data_path)
+score = optimal_distortion(mfccA, mfccB)
+'''
