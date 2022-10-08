@@ -1,6 +1,9 @@
 import librosa
 import numpy as np
 import math
+import matplotlib.pyplot as plt
+
+from pkg_resources import set_extraction_path
 
 # 计算mfcc系数
 def mfcc(data_path):
@@ -60,9 +63,53 @@ def optimal_distortion(mfccA, mfccB):
         point = point2
     return min_score
 
-
+'''
+# draw the path
 s1A_data_path = '/Users/josehung/Downloads/document/course/CMSC5707/assignment/[Asg-1][1155177751][Hong Shengzhe]/set-A/s1A.wav'
 s1B_data_path = '/Users/josehung/Downloads/document/course/CMSC5707/assignment/[Asg-1][1155177751][Hong Shengzhe]/set-B/s1B.wav'
 mfccA = mfcc(s1A_data_path)
 mfccB = mfcc(s1B_data_path)
 score = optimal_distortion(mfccA, mfccB)
+'''
+# 1 读取文件夹中所有文件，分为 A 和 B 两类
+# 2 得到两类 mfcc 参数
+# 3 两两对比计算，得到score
+# 4 画出score矩阵
+
+# show an n × n Confusion matrix- table
+# 得到所有的文件路径
+setA_path = []
+setB_path = []
+for i in range(1,7):
+    setA_path.append('/Users/josehung/Downloads/document/course/CMSC5707/assignment/[Asg-1][1155177751][Hong Shengzhe]/set-A/s' + str(i) + 'A.wav')
+    setB_path.append('/Users/josehung/Downloads/document/course/CMSC5707/assignment/[Asg-1][1155177751][Hong Shengzhe]/set-B/s' + str(i) + 'B.wav')
+# 得到所有文件的 mfcc 系数
+mfccA = []
+mfccB = []
+for i in range(6):
+    tmp = mfcc(setA_path[i])
+    mfccA.append(tmp)
+    tmp = mfcc(setB_path[i])
+    mfccB.append(tmp)
+
+# 两两计算 minimum accumulated distance 并得到 n × n Confusion matrix-table
+score_matrix = []
+for i in range(6):
+    curLevel = []
+    for j in range(6):
+        tmp = optimal_distortion(mfccA[i], mfccB[j])
+        curLevel.append(tmp)
+    score_matrix.append(curLevel)
+score_matrix = np.array(score_matrix)
+plt.imshow(score_matrix, cmap=plt.cm.gray)
+plt.colorbar()
+plt.title("Confusion Matrix Table")
+plt.xlabel('Reference Class)')
+plt.ylabel('Predicted Class')
+'''
+# 可以显示具体数值
+for i in range(6):
+    for j in range(6):
+        plt.text(x=j, y=i, s=int(score_matrix[i, j]))
+'''
+plt.show()
