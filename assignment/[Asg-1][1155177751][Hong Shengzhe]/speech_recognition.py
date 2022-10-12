@@ -125,6 +125,9 @@ for i in range(6):
     score_matrix.append(curLevel)
 score_matrix = np.array(score_matrix)
 plt.imshow(score_matrix, cmap=plt.cm.gray)
+for i in range(6):
+    for j in range(6):
+        plt.text(i,j,int(score_matrix[i][j]),fontsize=8,color="r")
 plt.colorbar()
 plt.title("Confusion Matrix Table")
 plt.xlabel('Reference Class')
