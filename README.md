@@ -11,7 +11,7 @@ Here are the results of my work.
 
 ## Part 1-2
 
-***Note: Because my student number is 1155177751, which only contains three numbers. So in addition to the numbers 1, 5 and 7, I chose three other numbers 2, 3 and 9.***
+***Note: Because my student number only contains three numbers. So in addition to the numbers 1, 5 and 7, I chose three other numbers 2, 3 and 9.***
 
 After recording the initial audio with my mobile phone, then I converted the file to .wav format  and set the sampling rate to **44100** and the data width to **16** bits. Here are the two data sets obtained.
 
